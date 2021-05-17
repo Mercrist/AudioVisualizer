@@ -55,8 +55,8 @@ class ofApp : public ofBaseApp{
 		void recordKey(char key);
 		
 		//song changes
-		string songs[8]={"customers-creed.wav","Gary-Blue.wav", "hopesearching.wav","Mickey.wav","sanctuary.wav","Victory.wav", "whims.wav","Zelda-music.wav"};
-		string song = songs[0];
+		string songs[4]={"customers-creed.wav", "hopesearching.wav","sanctuary.wav", "whims.wav"};
+		size_t songIndex = 0;
 
 		//replay variables
 		size_t index = 0;

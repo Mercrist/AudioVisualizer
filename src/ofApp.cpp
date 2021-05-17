@@ -1,7 +1,7 @@
 #include "ofApp.h"
 //--------------------------------------------------------------
 void ofApp::setup(){
-    sound.loadSound("customers-creed.wav"); //Loads a sound file (in bin/data/)
+    sound.loadSound(songs[0]); //Loads a sound file (in bin/data/)
     sound.setLoop(true); // Makes the song loop indefinitely
     sound.setVolume(1); // Sets the song volume
     ofSetBackgroundColor(255,99,71);   // Sets the Background Color
@@ -117,7 +117,7 @@ void ofApp::recordKey(char key)
 {
     //only want to register keys that switch or do something in the program, not just any key
     if (key == 'p' || key == 'a' || key == '1' || key == '2' || key == '3' || key == '4' || key == '=' || key == '-' || key == 'd' || key == 'f')
-        {keys.push_back(key);} 
+        keys.push_back(key);
 }
 
 void ofApp::replayKeys()
@@ -189,27 +189,22 @@ void ofApp::replayKeys()
                 }
                 break;
             
-            case 'd': //goes forward in the song list
-                for(int i=0;i<8;i++){
-                    if(song==songs[i]){
-                        if(i==0){i=8;}
-                            sound.loadSound(songs[i-1]);
-                            sound.play();
-                            song=songs[i-1];
-                        }
-                    }
+            case 'd': //goes backwards in the song list
+                if(songIndex <= 0)
+                    songIndex = 4;
+            
+                songIndex -=1;
+                sound.loadSound(songs[songIndex]);
+                sound.play();
                 break;
 
-            case 'f': //goes backward in the song list
-                for(int i=0;i<8;i++){
-                    if(song==songs[i]){
-                        if(i==7){i=-1;}
-                            sound.loadSound(songs[i+1]);
-                            sound.play();
-                            song=songs[i+1];
-                            break;
-                        }
-                    }
+            case 'f': //goes forwards in the song list
+                if(songIndex >= 3)
+                    songIndex = -1;
+            
+                songIndex += 1;
+                sound.loadSound(songs[songIndex]);
+                sound.play();
                 break;
 
             }
@@ -296,29 +291,24 @@ void ofApp::keyPressed(int key){
             recording = !recording; 
             break;
         
-        case 'd': 
-            for(int i=0;i<8;i++){
-                if(song==songs[i]){
-                    if(i==0){i=8;}
-                        sound.loadSound(songs[i-1]);
-                        sound.play();
-                        song=songs[i-1];
-                    }
-                }
+        case 'd': //goes backwards in the song list
+            if(songIndex <= 0)
+                songIndex = 4;
+            
+            songIndex -=1;
+            sound.loadSound(songs[songIndex]);
+            sound.play();
             break;
 
         case 'f': 
-            for(int i=0;i<8;i++){
-                if(song==songs[i]){
-                    if(i==7){i=-1;}
-                        sound.loadSound(songs[i+1]);
-                        sound.play();
-                        song=songs[i+1];
-                        break;
-                    }
-                }
+            if(songIndex >= 3)
+                songIndex = -1;
+            
+            songIndex += 1;
+            sound.loadSound(songs[songIndex]);
+            sound.play();
             break;
-
+            
         case 't':
             if (keys.size() != 0) //can't replay keys if there are no keys stored
             {
